@@ -9,7 +9,7 @@ export default function Bookmarks() {
 				alignItems: "center",
 			}}
 		>
-			<Text style={{ fontSize: 20 }}>Bookmarks Page - bookmarks.tsx</Text>
+			<Text style={{ fontSize: 24 }}>Bookmarks</Text>
 		</View>
 	);
 }

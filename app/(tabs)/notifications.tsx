@@ -9,7 +9,7 @@ export default function Notifications() {
 				alignItems: "center",
 			}}
 		>
-			<Text style={{ fontSize: 20 }}>Notifications Page - notifications.tsx</Text>
+			<Text style={{ fontSize: 24 }}>Notifications</Text>
 		</View>
 	);
 }
