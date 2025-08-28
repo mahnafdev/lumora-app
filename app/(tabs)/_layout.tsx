@@ -19,6 +19,7 @@ export default function TabLayout() {
 				},
 			}}
 		>
+			{/* 'Feed' screen tab */}
 			<Tabs.Screen
 				name="index"
 				options={{
@@ -31,6 +32,7 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			{/* 'Bookmarks' screen tab */}
 			<Tabs.Screen
 				name="bookmarks"
 				options={{
@@ -43,6 +45,7 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			{/* 'Create Post' screen tab */}
 			<Tabs.Screen
 				name="createPost"
 				options={{
@@ -55,6 +58,7 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			{/* 'Notifications' screen tab */}
 			<Tabs.Screen
 				name="notifications"
 				options={{
@@ -67,6 +71,7 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			{/* 'Profile' screen tab */}
 			<Tabs.Screen
 				name="profile"
 				options={{
