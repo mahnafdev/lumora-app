@@ -19,7 +19,7 @@ export default function InitialLayout() {
 		if (!isSignedIn && !isInAuthScreen) router.replace("/(auth)/login");
 		// If user isn signed in and isn in Auth screen, redirect user to Index/Feed screen
 		else if (isSignedIn && isInAuthScreen) router.replace("/(tabs)");
-	}, [isLoaded, isSignedIn, segments]);
+	}, [isLoaded, isSignedIn, segments, router]);
 	// If user isn't loaded, return nothing
 	if (!isLoaded) return null;
 	// After successful operations, return the Stack
