@@ -1,6 +1,8 @@
-import { Text, View } from "react-native";
+import { useAuth } from "@clerk/clerk-expo";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
+	const { signOut } = useAuth();
 	return (
 		<View
 			style={{
@@ -11,6 +13,9 @@ export default function Index() {
 			}}
 		>
 			<Text style={{ fontSize: 24 }}>Feed</Text>
+			<TouchableOpacity onPress={() => signOut()}>
+				<Text style={{ fontSize: 18 }}>Logout</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }
