@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
 
+// Mutation - Create User
 export const createUser = mutation({
 	// Get dynamic values as arguments
 	args: {
