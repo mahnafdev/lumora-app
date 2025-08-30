@@ -74,33 +74,33 @@ export const styles = StyleSheet.create({
 	},
 	changeImageButton: {
 		position: "absolute",
-		bottom: 16,
-		right: 16,
+		bottom: 8,
+		right: 8,
 		backgroundColor: "#03070ebf",
 		flexDirection: "row",
 		alignItems: "center",
 		padding: 8,
 		borderRadius: 6,
-		gap: 6,
+		gap: 4,
 	},
 	changeImageText: {
 		color: COLORS.white,
 		fontSize: 14,
 		fontWeight: 500,
 	},
-	inputSection: {
+	captionSection: {
 		padding: 16,
 		flex: 1,
 	},
 	captionContainer: {
 		flexDirection: "row",
 		alignItems: "flex-start",
+		columnGap: 12,
 	},
-	userAvatar: {
-		width: 32,
-		height: 32,
-		borderRadius: "50%",
-		marginRight: 12,
+	authorImage: {
+		width: 40,
+		height: 40,
+		borderRadius: 20,
 	},
 	captionInput: {
 		minHeight: 40,

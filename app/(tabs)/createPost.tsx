@@ -10,10 +10,12 @@ import {
 	Platform,
 	ScrollView,
 	Text,
+	TextInput,
 	TouchableOpacity,
 	View,
 } from "react-native";
 import { launchImageLibraryAsync } from "expo-image-picker";
+import { Image } from "expo-image";
 
 export default function CreatePostScreen() {
 	// RN/Expo Hooks
@@ -74,9 +76,9 @@ export default function CreatePostScreen() {
 	}
 	return (
 		<KeyboardAvoidingView
-			behavior={Platform.OS === "ios" ? "padding" : "height"}
+			behavior={Platform.OS === "android" ? "height" : "padding"}
 			style={styles.container}
-			keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0}
+			keyboardVerticalOffset={Platform.OS === "android" ? 30 : 30}
 		>
 			<View style={styles.contentContainer}>
 				{/* Header */}
@@ -113,6 +115,61 @@ export default function CreatePostScreen() {
 						)}
 					</TouchableOpacity>
 				</View>
+				{/* Main content */}
+				<ScrollView
+					contentContainerStyle={styles.scrollContent}
+					contentOffset={{ x: 0, y: 100 }}
+					bounces={false}
+					keyboardShouldPersistTaps="handled"
+				>
+					<View style={[styles.content, isSharing && styles.contentDisabled]}>
+						{/* Image section */}
+						<View style={styles.imageSection}>
+							{/* Thumbnail Image */}
+							<Image
+								source={uploadedImage}
+								style={styles.imagePreview}
+								contentFit="cover"
+								transition={200}
+							/>
+							{/* Change-Image button */}
+							<TouchableOpacity
+								style={styles.changeImageButton}
+								onPress={uploadImage}
+								disabled={isSharing}
+							>
+								<Ionicons
+									name="image"
+									size={20}
+									color={COLORS.white}
+								/>
+								<Text style={styles.changeImageText}>Change</Text>
+							</TouchableOpacity>
+						</View>
+						{/* Caption section */}
+						<View style={styles.captionSection}>
+							<View style={styles.captionContainer}>
+								{/* Author Image */}
+								<Image
+									source={user?.imageUrl}
+									style={styles.authorImage}
+									contentFit="cover"
+									transition={200}
+								/>
+								{/* Caption Input */}
+								<TextInput
+									style={styles.captionInput}
+									multiline
+									placeholder="Write the caption..."
+									placeholderTextColor={COLORS.lightGray}
+									value={caption}
+									onChangeText={setCaption}
+									editable={!isSharing}
+								/>
+							</View>
+						</View>
+					</View>
+				</ScrollView>
 			</View>
 		</KeyboardAvoidingView>
 	);
