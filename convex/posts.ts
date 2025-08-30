@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
 
-// Mutation - Generate File (Image) Upload URL
+// Mutation - Generate Image Upload URL
 export const generateImageUploadUrl = mutation(
 	async (ctx) => await ctx.storage.generateUploadUrl(),
 );

@@ -16,6 +16,9 @@ import {
 } from "react-native";
 import { launchImageLibraryAsync } from "expo-image-picker";
 import { Image } from "expo-image";
+import { uploadAsync, FileSystemUploadType } from "expo-file-system";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function CreatePostScreen() {
 	// RN/Expo Hooks
@@ -37,6 +40,39 @@ export default function CreatePostScreen() {
 		});
 		// Set the Image-URI to the uploadedImage state
 		if (!result.canceled) setUploadedImage(result.assets[0].uri);
+	};
+	// Import the needed mutation functions
+	const generateImageUploadUrl = useMutation(api.posts.generateImageUploadUrl);
+	const createPost = useMutation(api.posts.createPost);
+	// Handle sharing
+	const handleShare = async () => {
+		// Check if no image is uploaded
+		if (!uploadedImage) return;
+		try {
+			// Update the 'isSharing' state
+			setIsSharing(true);
+			// Generate the image upload URL
+			const uploadUrl = await generateImageUploadUrl();
+			// Upload the image using FileSystem and get the result
+			const uploadResult = await uploadAsync(uploadUrl, uploadedImage, {
+				httpMethod: "POST",
+				uploadType: FileSystemUploadType.BINARY_CONTENT,
+				mimeType: "image/jpeg",
+			});
+			// Throw error if the upload failed
+			if (uploadResult.status !== 200)
+				throw new Error(`(${uploadResult.status}) Image upload failed`);
+			// Get the 'storageId' from upload response body
+			const { storageId } = JSON.parse(uploadResult.body);
+			// Create the post using a Convex mutation
+			await createPost({ storageId, caption });
+			// Redirect to the Feed screen
+			router.push("/(tabs)");
+		} catch (error) {
+			console.error("Error while Sharing Post:", error);
+		} finally {
+			setIsSharing(false);
+		}
 	};
 	// Render the UI that should be shown when no image is uploaded
 	if (!uploadedImage) {
@@ -103,7 +139,7 @@ export default function CreatePostScreen() {
 					<TouchableOpacity
 						style={[styles.shareButton, isSharing && styles.shareButtonDisabled]}
 						disabled={isSharing || !uploadedImage}
-						onPress={() => setIsSharing(true)}
+						onPress={() => handleShare()}
 					>
 						{isSharing ? (
 							<ActivityIndicator
