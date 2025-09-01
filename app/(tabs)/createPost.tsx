@@ -72,6 +72,8 @@ export default function CreatePostScreen() {
 			console.error("Error while Sharing Post:", error);
 		} finally {
 			setIsSharing(false);
+			setUploadedImage(null);
+			setCaption("");
 		}
 	};
 	// Render the UI that should be shown when no image is uploaded

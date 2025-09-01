@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
+import { getAuthenticatedUser } from "./users";
 
 // Mutation - Generate Image Upload URL
 export const generateImageUploadUrl = mutation(
@@ -15,17 +16,8 @@ export const createPost = mutation({
 	},
 	// Mutation handler
 	handler: async (ctx, args) => {
-		// Get the current user identity
-		const userIdentity = await ctx.auth.getUserIdentity();
-		// Check if the user identity is present
-		if (!userIdentity) throw new Error("401 Unauthorized: User is not authorized.");
-		// Get the current user by ClerkId
-		const currentUser = await ctx.db
-			.query("users")
-			.withIndex("by_clerk_id", (qry) => qry.eq("clerkId", userIdentity.subject))
-			.first();
-		// Check if the current user isn't found
-		if (!currentUser) throw new Error("404 Not Found: User not found.");
+		// Check and get the currently authenticated user
+		const currentUser = await getAuthenticatedUser(ctx);
 		// Get the ImageUrl from storage
 		const imageUrl = await ctx.storage.getUrl(args.storageId);
 		// Check if the image URL isn't found
