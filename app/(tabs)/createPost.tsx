@@ -202,6 +202,7 @@ export default function CreatePostScreen() {
 									placeholderTextColor={COLORS.lightGray}
 									value={caption}
 									onChangeText={setCaption}
+									maxLength={200}
 									editable={!isSharing}
 								/>
 							</View>

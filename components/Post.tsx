@@ -1,11 +1,30 @@
 import { COLORS } from "@/constants/theme";
+import { Id } from "@/convex/_generated/dataModel";
 import { styles } from "@/styles/feedStyles";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 
-const Post = ({ post }: { post: any }) => {
+// Type of Posts
+type PostType = {
+	_id: Id<"posts">;
+	_creationTime: number;
+	author: {
+		_id: string;
+		image: string;
+		fullname: string;
+		username: string;
+	};
+	caption?: string;
+	image: string;
+	buzzes: number;
+	comments: number;
+	isBuzzed: boolean;
+	isBookmarked: boolean;
+};
+
+const Post = ({ post }: { post: PostType }) => {
 	return (
 		<View style={styles.post}>
 			{/* Header */}

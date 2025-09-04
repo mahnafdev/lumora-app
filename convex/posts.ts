@@ -15,7 +15,7 @@ export const getFeedPosts = query({
 		const organizedPosts = await Promise.all(
 			posts.map(async (post) => {
 				// Get the author document
-				const author = await ctx.db.get(post.authorId);
+				const author = (await ctx.db.get(post.authorId))!;
 				// Get the buzz document
 				const buzz = await ctx.db
 					.query("buzzes")
@@ -34,7 +34,7 @@ export const getFeedPosts = query({
 				return {
 					...post,
 					author: {
-						id: author?._id,
+						_id: author?._id,
 						image: author?.image,
 						fullname: author?.fullname,
 						username: author?.username,

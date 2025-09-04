@@ -1,6 +1,7 @@
 import { styles } from "@/styles/feedStyles";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 
+// Type of Stories
 type StoryType = {
 	id: number;
 	username: string;
