@@ -25,7 +25,7 @@ export const STORIES = [
 	},
 	{
 		id: 5,
-		username: "mehnaz.designs",
+		username: "mehnaz.des",
 		avatar: "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?w=200&h=200&fit=crop",
 		hasStory: true,
 	},
