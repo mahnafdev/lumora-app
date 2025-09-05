@@ -84,3 +84,47 @@ export const createPost = mutation({
 		});
 	},
 });
+
+// Mutation - Toggle Post Buzzing
+export const toggleBuzz = mutation({
+	args: {
+		postId: v.id("posts"),
+	},
+	handler: async (ctx, args) => {
+		// Check and access current user
+		const currentUser = await getAuthenticatedUser(ctx);
+		// Get the existing buzz document
+		const existingBuzz = await ctx.db
+			.query("buzzes")
+			.withIndex("by_both", (q) =>
+				q.eq("buzzerId", currentUser._id).eq("postId", args.postId),
+			)
+			.first();
+		// Get the post
+		const post = await ctx.db.get(args.postId);
+		// Throw error if post not found
+		if (!post) throw new Error("404 Not Found: Post not found.");
+		// Unbuzz
+		if (existingBuzz) {
+			// Delete the existing buzz document
+			await ctx.db.delete(existingBuzz._id);
+			// Decrease buzz count of the post by 1
+			await ctx.db.patch(args.postId, { buzzes: post.buzzes - 1 });
+			// Confirm Unbuzzing
+			return false;
+		}
+		// Buzz
+		else {
+			// Insert the new buzz
+			await ctx.db.insert("buzzes", {
+				buzzerId: currentUser._id,
+				postId: args.postId,
+			});
+			// Increase buzz count of the post by 1
+			await ctx.db.patch(args.postId, { buzzes: post.buzzes + 1 });
+			// ToDo: If the buzzer isn't the author, send a notification to the author about Buzzing
+			// Confirm Buzzing
+			return true;
+		}
+	},
+});
