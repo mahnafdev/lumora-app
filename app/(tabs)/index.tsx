@@ -14,7 +14,7 @@ export default function FeedScreen() {
 	const { signOut } = useAuth();
 	// Fetch Posts data
 	const posts = useQuery(api.posts.getFeedPosts, {});
-	// ToDo: Show a loader if can't get posts
+	// ToDo: Show a loader if posts aren't fetched
 	return (
 		<View style={styles.container}>
 			{/* Header */}

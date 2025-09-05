@@ -1,9 +1,12 @@
 import { COLORS } from "@/constants/theme";
+import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { styles } from "@/styles/feedStyles";
 import { Ionicons } from "@expo/vector-icons";
+import { useMutation } from "convex/react";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
+import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 // Type of Posts
@@ -25,6 +28,19 @@ type PostType = {
 };
 
 const Post = ({ post }: { post: PostType }) => {
+	// State of Buzzed state
+	const [isBuzzed, setIsBuzzed] = useState(post.isBuzzed);
+	// Import necessary mutation functions
+	const toggleBuzz = useMutation(api.posts.toggleBuzz);
+	// Handle buzz toggling
+	const handleBuzzToggle = async () => {
+		try {
+			const newIsBuzzed = await toggleBuzz({ postId: post._id });
+			setIsBuzzed(newIsBuzzed);
+		} catch (error) {
+			console.error("Error while toggling Buzz:", error);
+		}
+	};
 	return (
 		<View style={styles.post}>
 			{/* Header */}
@@ -76,11 +92,11 @@ const Post = ({ post }: { post: PostType }) => {
 			<View style={styles.postActions}>
 				<View style={styles.postActionsLeft}>
 					{/* Buzz */}
-					<TouchableOpacity>
+					<TouchableOpacity onPress={handleBuzzToggle}>
 						<Ionicons
-							name="radio-outline"
+							name={isBuzzed ? "radio" : "radio-outline"}
 							size={24}
-							color={COLORS.white}
+							color={isBuzzed ? COLORS.primary : COLORS.white}
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity>
