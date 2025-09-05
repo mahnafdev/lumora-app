@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader";
 import Post from "@/components/Post";
 import Story from "@/components/Story";
 import { STORIES } from "@/constants/story_mock_data";
@@ -7,14 +8,13 @@ import { styles } from "@/styles/feedStyles";
 import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "convex/react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function FeedScreen() {
 	// Import auth-related SDKs
 	const { signOut } = useAuth();
 	// Fetch Posts data
 	const posts = useQuery(api.posts.getFeedPosts, {});
-	// ToDo: Show a loader if posts aren't fetched
 	return (
 		<View style={styles.container}>
 			{/* Header */}
@@ -47,6 +47,16 @@ export default function FeedScreen() {
 					))}
 				</ScrollView>
 				{/* Posts */}
+				{/* Display loader if posts aren't fetched */}
+				{!posts && (
+					<View
+						style={{
+							height: Dimensions.get("window").height * 0.7,
+						}}
+					>
+						<Loader />
+					</View>
+				)}
 				{posts?.length === 0 ? (
 					<View style={styles.noPostsContainer}>
 						<Text style={styles.noPostsText}>No one posted something yet</Text>
