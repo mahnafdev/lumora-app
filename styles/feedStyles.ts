@@ -56,13 +56,14 @@ export const styles = StyleSheet.create({
 		textAlign: "center",
 	},
 	noPostsContainer: {
-		height: height * 0.7,
+		height: height,
 		justifyContent: "center",
 		alignItems: "center",
+		backgroundColor: COLORS.background,
 	},
 	noPostsText: {
 		fontSize: 20,
-		color: COLORS.lightGray,
+		color: COLORS.primary,
 	},
 	post: {
 		paddingVertical: 12,

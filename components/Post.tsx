@@ -85,7 +85,7 @@ const Post = ({ post }: { post: PostType }) => {
 				source={{ uri: post.image }}
 				style={styles.postImage}
 				contentFit="cover"
-				transition={200}
+				transition={150}
 				cachePolicy="memory-disk"
 			/>
 			{/* Post Actions */}
