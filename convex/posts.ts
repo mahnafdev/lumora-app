@@ -70,7 +70,7 @@ export const createPost = mutation({
 		// Check if the image URL isn't found
 		if (!imageUrl) throw new Error("404 Not Found: Image URL not found.");
 		// Insert the post in DB
-		await ctx.db.insert("posts", {
+		const postId = await ctx.db.insert("posts", {
 			authorId: currentUser._id,
 			storageId: args.storageId,
 			image: imageUrl,
@@ -82,6 +82,8 @@ export const createPost = mutation({
 		await ctx.db.patch(currentUser._id, {
 			posts: currentUser.posts + 1,
 		});
+		// Return the inserted post Id
+		return postId;
 	},
 });
 
@@ -108,7 +110,7 @@ export const toggleBuzz = mutation({
 		if (existingBuzz) {
 			// Delete the existing buzz document
 			await ctx.db.delete(existingBuzz._id);
-			// Decrease buzz count of the post by 1
+			// Decrement buzz count of the post by 1
 			await ctx.db.patch(args.postId, { buzzes: post.buzzes - 1 });
 			// Confirm Unbuzzing
 			return false;
@@ -120,9 +122,9 @@ export const toggleBuzz = mutation({
 				buzzerId: currentUser._id,
 				postId: args.postId,
 			});
-			// Increase buzz count of the post by 1
+			// Increment buzz count of the post by 1
 			await ctx.db.patch(args.postId, { buzzes: post.buzzes + 1 });
-			// ToDo: If the buzzer isn't the author, send a notification to the author about Buzzing
+			// ToDo: If the buzzer isn't the author, send a notification to the author
 			// Confirm Buzzing
 			return true;
 		}
