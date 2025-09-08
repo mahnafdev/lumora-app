@@ -8,7 +8,7 @@ import { styles } from "@/styles/feedStyles";
 import { useAuth } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "convex/react";
-import { Dimensions, FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 export default function FeedScreen() {
 	// Import auth-related SDKs
