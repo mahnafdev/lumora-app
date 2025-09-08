@@ -1,7 +1,42 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { getAuthenticatedUser } from "./users";
 
+// Query - Get Comments of a Post
+export const getComments = query({
+	args: {
+		postId: v.id("posts"),
+	},
+	handler: async (ctx, args) => {
+		// Fetch all comments of the post
+		const comments = await ctx.db
+			.query("comments")
+			.withIndex("by_post", (q) => q.eq("postId", args.postId))
+			.collect();
+		// Return an empty array if no comments
+		if (comments.length === 0) return [];
+		// Organize posts with commenter data
+		const organizedComments = await Promise.all(
+			comments.map(async (comment) => {
+				// Get the commenter data
+				const commenter = await ctx.db.get(comment.commenterId);
+				// Return the organizedComments
+				return {
+					...comments,
+					commenter: {
+						_id: commenter?._id,
+						image: commenter?.image,
+						fullname: commenter?.fullname,
+						username: commenter?.username,
+					},
+				};
+			}),
+		);
+		return organizedComments;
+	},
+});
+
+// Mutation - Create Comment
 export const createComment = mutation({
 	// Get dynamic values from arguments
 	args: {
