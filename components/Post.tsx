@@ -9,6 +9,7 @@ import { Link } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import CommentsModal from "./CommentsModal";
+import { formatDistanceToNow } from "date-fns";
 
 // Type of Posts
 type PostType = {
@@ -48,7 +49,7 @@ const Post = ({ post }: { post: PostType }) => {
 		<View style={styles.post}>
 			{/* Header */}
 			<View style={styles.postHeader}>
-				{/* Author (Left-side) */}
+				{/* Author */}
 				{/* ToDo: Replace the link with author profile link */}
 				<Link href={"/(tabs)/profile"}>
 					<TouchableOpacity style={styles.postAuthor}>
@@ -71,7 +72,8 @@ const Post = ({ post }: { post: PostType }) => {
 						</View>
 					</TouchableOpacity>
 				</Link>
-				{/* ToDo: Build the right-side with author options */}
+				{/* Posted Time */}
+				<Text style={styles.postedTime}>{formatDistanceToNow(post._creationTime)}</Text>
 			</View>
 			{post.caption && (
 				<Text
@@ -93,46 +95,39 @@ const Post = ({ post }: { post: PostType }) => {
 			/>
 			{/* Post Actions */}
 			<View style={styles.postActions}>
-				<View style={styles.postActionsLeft}>
-					{/* Buzz */}
-					<TouchableOpacity onPress={handleBuzzToggle}>
-						<Ionicons
-							name={isBuzzed ? "radio" : "radio-outline"}
-							size={24}
-							color={isBuzzed ? COLORS.primary : COLORS.white}
-						/>
-					</TouchableOpacity>
-					{/* Comment */}
-					<TouchableOpacity onPress={() => setShowComments(true)}>
-						<Ionicons
-							name="chatbubble-outline"
-							size={24}
-							color={COLORS.white}
-						/>
-					</TouchableOpacity>
-				</View>
+				{/* Buzz */}
+				<TouchableOpacity
+					style={styles.buzzes}
+					onPress={handleBuzzToggle}
+				>
+					<Ionicons
+						name={isBuzzed ? "radio" : "radio-outline"}
+						size={22}
+						color={isBuzzed ? COLORS.primary : COLORS.white}
+					/>
+					{/* Buzzes Count */}
+					<Text style={styles.buzzesCount}>{post.buzzes}</Text>
+				</TouchableOpacity>
+				{/* Comment */}
+				<TouchableOpacity
+					style={styles.comments}
+					onPress={() => setShowComments(true)}
+				>
+					<Ionicons
+						name="chatbubble-outline"
+						size={22}
+						color={COLORS.white}
+					/>
+					{/* Comments Count */}
+					<Text style={styles.commentsCount}>{post.comments}</Text>
+				</TouchableOpacity>
 				<TouchableOpacity>
 					<Ionicons
 						name="bookmark-outline"
-						size={24}
+						size={22}
 						color={COLORS.white}
 					/>
 				</TouchableOpacity>
-			</View>
-			{/* Stats */}
-			<View style={styles.postStats}>
-				{/* Posted Time */}
-				<Text style={styles.postedTime}>2 hours ago</Text>
-				<View style={styles.postStatsBottom}>
-					{/* Buzzes Count */}
-					<Text style={styles.buzzesText}>
-						{post.buzzes === 0 ? "No buzzes yet" : `${post.buzzes} Buzzes`}
-					</Text>
-					{/* Comments Count */}
-					<Text style={styles.commentsText}>
-						{post.comments === 0 ? "No comments yet" : `${post.comments} Comments`}
-					</Text>
-				</View>
 			</View>
 			{/* Comments Modal */}
 			<CommentsModal

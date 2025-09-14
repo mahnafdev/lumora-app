@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
 		borderRadius: 18,
 	},
 	postAuthorNames: {
-		rowGap: 2,
+		rowGap: 1,
 	},
 	postAuthorFullname: {
 		fontSize: 14,
@@ -100,6 +100,11 @@ export const styles = StyleSheet.create({
 		color: COLORS.lightGray,
 		letterSpacing: 0.2,
 	},
+	postedTime: {
+		fontSize: 12,
+		color: COLORS.lightGray,
+		fontWeight: 500,
+	},
 	postImage: {
 		width: width,
 		height: width,
@@ -109,15 +114,7 @@ export const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 		paddingHorizontal: 16,
-		paddingVertical: 12,
-	},
-	postActionsLeft: {
-		flexDirection: "row",
-		alignItems: "center",
-		gap: 16,
-	},
-	postStats: {
-		paddingHorizontal: 12,
+		paddingTop: 12,
 	},
 	captionText: {
 		fontSize: 14,
@@ -130,21 +127,22 @@ export const styles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight: 600,
 	},
-	postStatsBottom: {
+	buzzes: {
 		flexDirection: "row",
-		justifyContent: "space-between",
+		alignItems: "center",
+		columnGap: 8,
 	},
-	postedTime: {
-		fontSize: 14,
-		color: COLORS.white,
-		marginBottom: 4,
+	comments: {
+		flexDirection: "row",
+		alignItems: "center",
+		columnGap: 8,
 	},
-	buzzesText: {
-		fontSize: 14,
+	buzzesCount: {
+		fontSize: 16,
 		color: COLORS.lightGray,
 	},
-	commentsText: {
-		fontSize: 14,
+	commentsCount: {
+		fontSize: 16,
 		color: COLORS.lightGray,
 	},
 });
