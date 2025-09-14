@@ -35,7 +35,6 @@ export default function CreatePostScreen() {
 		const result = await launchImageLibraryAsync({
 			mediaTypes: "images",
 			allowsEditing: true,
-			aspect: [1, 1],
 			quality: 0.7,
 		});
 		// Set the Image-URI to the uploadedImage state

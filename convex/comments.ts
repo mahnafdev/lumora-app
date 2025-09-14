@@ -22,12 +22,11 @@ export const getComments = query({
 				const commenter = await ctx.db.get(comment.commenterId);
 				// Return the organizedComments
 				return {
-					...comments,
+					...comment,
 					commenter: {
 						_id: commenter?._id,
 						image: commenter?.image,
 						fullname: commenter?.fullname,
-						username: commenter?.username,
 					},
 				};
 			}),

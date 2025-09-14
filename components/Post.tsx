@@ -8,6 +8,7 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import CommentsModal from "./CommentsModal";
 
 // Type of Posts
 type PostType = {
@@ -30,6 +31,8 @@ type PostType = {
 const Post = ({ post }: { post: PostType }) => {
 	// State of Buzzed state
 	const [isBuzzed, setIsBuzzed] = useState(post.isBuzzed);
+	// State of Comment Visibility
+	const [showComments, setShowComments] = useState(false);
 	// Import necessary mutation functions
 	const toggleBuzz = useMutation(api.posts.toggleBuzz);
 	// Handle buzz toggling
@@ -99,7 +102,8 @@ const Post = ({ post }: { post: PostType }) => {
 							color={isBuzzed ? COLORS.primary : COLORS.white}
 						/>
 					</TouchableOpacity>
-					<TouchableOpacity>
+					{/* Comment */}
+					<TouchableOpacity onPress={() => setShowComments(true)}>
 						<Ionicons
 							name="chatbubble-outline"
 							size={24}
@@ -130,6 +134,13 @@ const Post = ({ post }: { post: PostType }) => {
 					</Text>
 				</View>
 			</View>
+			{/* Comments Modal */}
+			<CommentsModal
+				postId={post._id}
+				isVisible={showComments}
+				onClose={() => setShowComments(false)}
+				onCommentAdd={() => {}}
+			/>
 		</View>
 	);
 };
