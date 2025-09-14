@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import CommentsModal from "./CommentsModal";
 import { formatDistanceToNow } from "date-fns";
+import { toggleBookmark } from "@/convex/bookmarks";
 
 // Type of Posts
 type PostType = {
@@ -32,10 +33,13 @@ type PostType = {
 const Post = ({ post }: { post: PostType }) => {
 	// State of Buzzed state
 	const [isBuzzed, setIsBuzzed] = useState(post.isBuzzed);
+	// State of Bookmarked state
+	const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
 	// State of Comment Visibility
 	const [showComments, setShowComments] = useState(false);
 	// Import necessary mutation functions
 	const toggleBuzz = useMutation(api.posts.toggleBuzz);
+	const toggleBookmark = useMutation(api.bookmarks.toggleBookmark);
 	// Handle buzz toggling
 	const handleBuzzToggle = async () => {
 		try {
@@ -43,6 +47,15 @@ const Post = ({ post }: { post: PostType }) => {
 			setIsBuzzed(newIsBuzzed);
 		} catch (error) {
 			console.error("Error while toggling Buzz:", error);
+		}
+	};
+	// Handle bookmark toggling
+	const handleBookmarkToggle = async () => {
+		try {
+			const newIsBookmarked = await toggleBookmark({ postId: post._id });
+			setIsBookmarked(newIsBookmarked);
+		} catch (error) {
+			console.error("Error while toggling Bookmark:", error);
 		}
 	};
 	return (
@@ -121,11 +134,11 @@ const Post = ({ post }: { post: PostType }) => {
 					{/* Comments Count */}
 					<Text style={styles.commentsCount}>{post.comments}</Text>
 				</TouchableOpacity>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={handleBookmarkToggle}>
 					<Ionicons
-						name="bookmark-outline"
+						name={isBookmarked ? "bookmark" : "bookmark-outline"}
 						size={22}
-						color={COLORS.white}
+						color={isBookmarked ? COLORS.primary : COLORS.white}
 					/>
 				</TouchableOpacity>
 			</View>
