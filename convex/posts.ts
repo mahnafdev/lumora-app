@@ -87,6 +87,47 @@ export const createPost = mutation({
 	},
 });
 
+// Mutation - Delete Post
+export const deletePost = mutation({
+	args: { postId: v.id("posts") },
+	handler: async (ctx, args) => {
+		// Check and get the currently authenticated user
+		const currentUser = await getAuthenticatedUser(ctx);
+		// Get the post
+		const post = await ctx.db.get(args.postId);
+		if (!post) throw new Error("404 Not Found: Post not found.");
+		// Verify post authority
+		if (post.authorId !== currentUser._id)
+			throw new Error("403 Forbidden: User don't have permission to delete the post.");
+		// Delete connected buzzes
+		const buzzes = await ctx.db
+			.query("buzzes")
+			.withIndex("by_post", (q) => q.eq("postId", args.postId))
+			.collect();
+		for (const buzz of buzzes) await ctx.db.delete(buzz._id);
+		// Delete connected comments
+		const comments = await ctx.db
+			.query("comments")
+			.withIndex("by_post", (q) => q.eq("postId", args.postId))
+			.collect();
+		for (const comment of comments) await ctx.db.delete(comment._id);
+		// Delete connected bookmarks
+		const bookmarks = await ctx.db
+			.query("bookmarks")
+			.withIndex("by_post", (q) => q.eq("postId", args.postId))
+			.collect();
+		for (const bookmark of bookmarks) await ctx.db.delete(bookmark._id);
+		// Delete connected files from storage
+		await ctx.storage.delete(post.storageId);
+		// Delete the post
+		await ctx.db.delete(args.postId);
+		// Decrement author's post count (-1)
+		await ctx.db.patch(currentUser._id, {
+			posts: (currentUser.posts || 1) - 1,
+		});
+	},
+});
+
 // Mutation - Toggle Post Buzzing
 export const toggleBuzz = mutation({
 	args: {

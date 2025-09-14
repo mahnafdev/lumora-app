@@ -10,7 +10,6 @@ import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import CommentsModal from "./CommentsModal";
 import { formatDistanceToNow } from "date-fns";
-import { toggleBookmark } from "@/convex/bookmarks";
 
 // Type of Posts
 type PostType = {
@@ -134,6 +133,7 @@ const Post = ({ post }: { post: PostType }) => {
 					{/* Comments Count */}
 					<Text style={styles.commentsCount}>{post.comments}</Text>
 				</TouchableOpacity>
+				{/* Bookmark */}
 				<TouchableOpacity onPress={handleBookmarkToggle}>
 					<Ionicons
 						name={isBookmarked ? "bookmark" : "bookmark-outline"}
