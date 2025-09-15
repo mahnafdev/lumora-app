@@ -22,7 +22,8 @@ export const styles = StyleSheet.create({
 	headerTitle: {
 		fontSize: 20,
 		fontWeight: 600,
-		color: COLORS.white,
+		fontFamily: "JetBrainsMono-Medium",
+		color: COLORS.primary,
 		alignSelf: "center",
 	},
 	shareButton: {

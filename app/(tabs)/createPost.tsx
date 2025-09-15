@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { launchImageLibraryAsync } from "expo-image-picker";
 import { Image } from "expo-image";
-import { uploadAsync, FileSystemUploadType } from "expo-file-system";
+import { uploadAsync, FileSystemUploadType } from "expo-file-system/legacy";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 

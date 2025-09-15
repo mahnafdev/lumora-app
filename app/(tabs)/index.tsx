@@ -15,13 +15,6 @@ export default function FeedScreen() {
 	const { signOut } = useAuth();
 	// Fetch Posts data
 	const posts = useQuery(api.posts.getFeedPosts, {});
-	// Display an info text if there are no posts
-	if (posts?.length === 0)
-		return (
-			<View style={styles.noPostsContainer}>
-				<Text style={styles.noPostsText}>No one posted something yet</Text>
-			</View>
-		);
 	return (
 		<View style={styles.container}>
 			{/* Header */}
@@ -39,6 +32,10 @@ export default function FeedScreen() {
 			{/* Posts */}
 			{!posts ? (
 				<Loader />
+			) : posts?.length === 0 ? (
+				<View style={styles.noPostsContainer}>
+					<Text style={styles.noPostsText}>No one posted something yet</Text>
+				</View>
 			) : (
 				<FlatList
 					data={posts}

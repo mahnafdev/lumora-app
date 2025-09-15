@@ -16,7 +16,7 @@ export const getUserBookmarks = query({
 		// Organize posts
 		const organizedBookmarks = await Promise.all(
 			bookmarks.map(async (bookmark) => {
-				const bookmarkedPost = await ctx.db.get(bookmark._id);
+				const bookmarkedPost = await ctx.db.get(bookmark.postId);
 				return bookmarkedPost;
 			}),
 		);
