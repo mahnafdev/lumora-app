@@ -65,7 +65,6 @@ export const createComment = mutation({
 				type: "comment",
 				receiverId: post.authorId,
 				senderId: currentUser._id,
-				commentId,
 			});
 		}
 		// Return the inserted comment Id

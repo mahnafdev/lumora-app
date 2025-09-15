@@ -9,9 +9,6 @@ export const styles = StyleSheet.create({
 		backgroundColor: COLORS.background,
 	},
 	header: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
 		paddingHorizontal: 24,
 		paddingVertical: 12,
 		borderBottomWidth: 1,

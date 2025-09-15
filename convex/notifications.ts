@@ -20,12 +20,8 @@ export const getUserNotifications = query({
 				const sender = (await ctx.db.get(notification.senderId))!;
 				// Initialize optional values as null
 				let post = null;
-				let comment = null;
 				// Get post if notification is related to post
 				if (notification.postId) post = await ctx.db.get(notification.postId);
-				// Get comment if notification type is comment
-				if (notification.type === "comment" && notification.commentId)
-					comment = await ctx.db.get(notification.commentId);
 				// Return the organized notifications
 				return {
 					...notification,
@@ -37,7 +33,6 @@ export const getUserNotifications = query({
 					post: {
 						image: post?.image,
 					},
-					comment: comment?.content,
 				};
 			}),
 		);

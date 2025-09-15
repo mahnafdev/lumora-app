@@ -40,11 +40,16 @@ export default defineSchema({
 	notifications: defineTable({
 		receiverId: v.id("users"),
 		senderId: v.id("users"),
-		type: v.union(v.literal("buzz"), v.literal("comment"), v.literal("follow")),
+		type: v.union(
+			v.literal("buzz"),
+			v.literal("comment"),
+			v.literal("follow"),
+			v.literal("unfollow"),
+		),
 		postId: v.optional(v.id("posts")),
-		commentId: v.optional(v.id("comments")),
 	})
 		.index("by_receiver", ["receiverId"])
+		.index("by_post", ["postId"])
 		.index("by_type", ["type"]),
 	// Follows table
 	follows: defineTable({

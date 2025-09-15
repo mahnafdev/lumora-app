@@ -97,6 +97,7 @@ export default function CommentsModal({
 						onChangeText={setNewComment}
 						placeholder="Write a comment..."
 						placeholderTextColor={COLORS.lightGray}
+						maxLength={150}
 						multiline
 					/>
 					{/* Post button */}

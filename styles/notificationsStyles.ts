@@ -1,5 +1,7 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { COLORS } from "@/constants/theme";
+
+const { height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
 	container: {
@@ -17,14 +19,23 @@ export const styles = StyleSheet.create({
 		fontFamily: "JetBrainsMono-Medium",
 		color: COLORS.primary,
 	},
+	noNotificationsContainer: {
+		height: height * 0.9,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	noNotificationsText: {
+		fontSize: 20,
+		color: COLORS.primary,
+	},
 	notificationsContainer: {
-		padding: 16,
+		padding: 12,
 	},
 	notification: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		marginBottom: 20,
+		marginBottom: 12,
 	},
 	notificationContent: {
 		flex: 1,
@@ -37,11 +48,10 @@ export const styles = StyleSheet.create({
 		marginRight: 12,
 	},
 	senderAvatar: {
-		width: 44,
-		height: 44,
-		borderRadius: 22,
-		borderWidth: 2,
-		borderColor: COLORS.surface,
+		width: 48,
+		height: 48,
+		borderRadius: 24,
+		borderWidth: 0,
 	},
 	notificationTypeIcon: {
 		position: "absolute",
@@ -53,8 +63,7 @@ export const styles = StyleSheet.create({
 		height: 24,
 		alignItems: "center",
 		justifyContent: "center",
-		borderWidth: 2,
-		borderColor: COLORS.surface,
+		borderWidth: 0,
 	},
 	notificationInfo: {
 		flex: 1,
@@ -65,9 +74,10 @@ export const styles = StyleSheet.create({
 		fontWeight: "600",
 		marginBottom: 2,
 	},
-	notificationTypeText: {
+	notificationText: {
 		color: COLORS.lightGray,
 		fontSize: 14,
+		fontWeight: 500,
 		marginBottom: 2,
 	},
 	receiveTime: {
@@ -75,9 +85,9 @@ export const styles = StyleSheet.create({
 		fontSize: 12,
 	},
 	postImage: {
-		width: 44,
-		height: 44,
-		borderRadius: 6,
+		width: 56,
+		height: 56,
+		borderRadius: 4,
 	},
 	centered: {
 		justifyContent: "center",
