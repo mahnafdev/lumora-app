@@ -66,7 +66,8 @@ export const styles = StyleSheet.create({
 		color: COLORS.primary,
 	},
 	post: {
-		paddingVertical: 12,
+		paddingTop: 4,
+		paddingBottom: 12,
 		borderBottomWidth: 1,
 		borderBottomColor: COLORS.surface,
 	},

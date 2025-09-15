@@ -3,13 +3,14 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { styles } from "@/styles/feedStyles";
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import CommentsModal from "./CommentsModal";
 import { formatDistanceToNow } from "date-fns";
+import { useUser } from "@clerk/clerk-expo";
 
 // Type of Posts
 type PostType = {
@@ -36,9 +37,16 @@ const Post = ({ post }: { post: PostType }) => {
 	const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
 	// State of Comment Visibility
 	const [showComments, setShowComments] = useState(false);
+	// Current user
+	const { user } = useUser();
+	const currentUser = useQuery(
+		api.users.getUserByClerkId,
+		user ? { clerkId: user.id } : "skip",
+	);
 	// Import necessary mutation functions
 	const toggleBuzz = useMutation(api.posts.toggleBuzz);
 	const toggleBookmark = useMutation(api.bookmarks.toggleBookmark);
+	const deletePost = useMutation(api.posts.deletePost);
 	// Handle buzz toggling
 	const handleBuzzToggle = async () => {
 		try {
@@ -55,6 +63,14 @@ const Post = ({ post }: { post: PostType }) => {
 			setIsBookmarked(newIsBookmarked);
 		} catch (error) {
 			console.error("Error while toggling Bookmark:", error);
+		}
+	};
+	// Handle post deletion
+	const handleDelete = async () => {
+		try {
+			await deletePost({ postId: post._id });
+		} catch (error) {
+			console.error("Error while deleting Post:", error);
 		}
 	};
 	return (
@@ -141,6 +157,16 @@ const Post = ({ post }: { post: PostType }) => {
 						color={isBookmarked ? COLORS.primary : COLORS.white}
 					/>
 				</TouchableOpacity>
+				{/* Delete */}
+				{currentUser?._id === post.author._id && (
+					<TouchableOpacity onPress={handleDelete}>
+						<Ionicons
+							name="trash-outline"
+							size={22}
+							color={COLORS.primary}
+						/>
+					</TouchableOpacity>
+				)}
 			</View>
 			{/* Comments Modal */}
 			<CommentsModal
