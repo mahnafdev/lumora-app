@@ -1,7 +1,30 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { getAuthenticatedUser } from "./users";
 
+// Query - Get Bookmarks of Current User
+export const getUserBookmarks = query({
+	handler: async (ctx) => {
+		// Check and get the current user
+		const currentUser = await getAuthenticatedUser(ctx);
+		// Fetch all bookmarks of current user
+		const bookmarks = await ctx.db
+			.query("bookmarks")
+			.withIndex("by_bookmarker", (q) => q.eq("bookmarkerId", currentUser._id))
+			.order("desc")
+			.collect();
+		// Organize posts
+		const organizedBookmarks = await Promise.all(
+			bookmarks.map(async (bookmark) => {
+				const bookmarkedPost = await ctx.db.get(bookmark._id);
+				return bookmarkedPost;
+			}),
+		);
+		return organizedBookmarks;
+	},
+});
+
+// Mutation - Toggle Bookmarking
 export const toggleBookmark = mutation({
 	args: { postId: v.id("posts") },
 	handler: async (ctx, args) => {

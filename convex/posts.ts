@@ -4,7 +4,7 @@ import { getAuthenticatedUser } from "./users";
 
 // Query - Get All Posts for Feed
 export const getFeedPosts = query({
-	handler: async (ctx, args) => {
+	handler: async (ctx) => {
 		// Check and get the currently authenticated user
 		const currentUser = await getAuthenticatedUser(ctx);
 		// Fetch all posts from DB
