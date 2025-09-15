@@ -58,7 +58,16 @@ export const createComment = mutation({
 		});
 		// Increment the post's comment count (+1)
 		await ctx.db.patch(args.postId, { comments: post.comments + 1 });
-		// ToDo: If the commenter isn't the author, send a notification to the author
+		// Send a notification to the author
+		if (post.authorId !== currentUser._id) {
+			await ctx.db.insert("notifications", {
+				postId: post._id,
+				type: "comment",
+				receiverId: post.authorId,
+				senderId: currentUser._id,
+				commentId,
+			});
+		}
 		// Return the inserted comment Id
 		return commentId;
 	},

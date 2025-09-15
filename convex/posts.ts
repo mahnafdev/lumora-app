@@ -165,7 +165,15 @@ export const toggleBuzz = mutation({
 			});
 			// Increment buzz count of the post by 1
 			await ctx.db.patch(args.postId, { buzzes: post.buzzes + 1 });
-			// ToDo: If the buzzer isn't the author, send a notification to the author
+			// Send a notification to the author
+			if (post.authorId !== currentUser._id) {
+				await ctx.db.insert("notifications", {
+					postId: post._id,
+					type: "buzz",
+					receiverId: post.authorId,
+					senderId: currentUser._id,
+				});
+			}
 			// Confirm Buzzing
 			return true;
 		}
