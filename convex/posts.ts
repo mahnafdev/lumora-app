@@ -49,6 +49,28 @@ export const getFeedPosts = query({
 	},
 });
 
+// Query - Get Posts of a User
+export const getUserPosts = query({
+	args: {
+		userId: v.optional(v.id("users")),
+	},
+	handler: async (ctx, args) => {
+		// Get the user
+		const user = args.userId
+			? await ctx.db.get(args.userId)
+			: await getAuthenticatedUser(ctx);
+		// Throw an error if user not found
+		if (!user) throw new Error("404 Not Found: User not found.");
+		// Fetch posts of the user
+		const posts = await ctx.db
+			.query("posts")
+			.withIndex("by_author", (q) => q.eq("authorId", args.userId || user._id))
+			.collect();
+		// Return the posts as response
+		return posts;
+	},
+});
+
 // Mutation - Generate Image Upload URL
 export const generateImageUploadUrl = mutation(
 	async (ctx) => await ctx.storage.generateUploadUrl(),

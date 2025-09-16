@@ -1,6 +1,7 @@
 import { query } from "./_generated/server";
 import { getAuthenticatedUser } from "./users";
 
+// Query - Get Notifications of Current User
 export const getUserNotifications = query({
 	handler: async (ctx) => {
 		// Check and access current user
@@ -40,3 +41,5 @@ export const getUserNotifications = query({
 		return organizedNotifications;
 	},
 });
+
+// ToDo: Add a mutation to create a notification
