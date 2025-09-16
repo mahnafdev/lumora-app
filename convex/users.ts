@@ -47,6 +47,23 @@ export const getUserByClerkId = query({
 	},
 });
 
+// Mutation - Update User Profile
+export const updateProfile = mutation({
+	args: {
+		fullname: v.string(),
+		bio: v.optional(v.string()),
+	},
+	handler: async (ctx, args) => {
+		// Get current user
+		const currentUser = await getAuthenticatedUser(ctx);
+		// Update profile data
+		await ctx.db.patch(currentUser._id, {
+			fullname: args.fullname,
+			bio: args.bio,
+		});
+	},
+});
+
 // Helper Function - Get Authenticated User
 export const getAuthenticatedUser = async (ctx: QueryCtx | MutationCtx) => {
 	// Get the user identity

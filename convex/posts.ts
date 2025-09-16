@@ -65,6 +65,7 @@ export const getUserPosts = query({
 		const posts = await ctx.db
 			.query("posts")
 			.withIndex("by_author", (q) => q.eq("authorId", args.userId || user._id))
+			.order("desc")
 			.collect();
 		// Return the posts as response
 		return posts;

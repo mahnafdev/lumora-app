@@ -15,31 +15,21 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 24,
 		paddingVertical: 12,
 		borderBottomWidth: 1,
-		borderBottomColor: COLORS.surfaceLight,
-	},
-	headerLeft: {
-		flexDirection: "row",
-		alignItems: "center",
+		borderBottomColor: COLORS.surface,
 	},
 	username: {
 		fontSize: 20,
 		fontWeight: 600,
-		color: COLORS.lightGray,
-	},
-	headerRight: {
-		flexDirection: "row",
-		gap: 16,
-	},
-	headerIcon: {
-		padding: 4,
+		color: COLORS.white,
 	},
 	profileInfo: {
-		padding: 12,
+		paddingHorizontal: 12,
+		paddingVertical: 16,
 	},
 	avatarAndStats: {
 		flexDirection: "row",
 		alignItems: "center",
-		marginBottom: 16,
+		marginBottom: 12,
 	},
 	avatarContainer: {
 		marginRight: 32,
@@ -56,7 +46,7 @@ export const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-around",
 	},
-	statItem: {
+	stat: {
 		alignItems: "center",
 	},
 	statNumber: {
@@ -70,20 +60,15 @@ export const styles = StyleSheet.create({
 		color: COLORS.lightGray,
 	},
 	fullname: {
-		fontSize: 16,
+		fontSize: 20,
 		fontWeight: 700,
 		color: COLORS.white,
-		marginBottom: 4,
+		marginBottom: 2,
 	},
 	bio: {
 		fontSize: 14,
 		color: COLORS.white,
 		lineHeight: 20,
-	},
-	actionButtons: {
-		flexDirection: "row",
-		gap: 8,
-		marginTop: 8,
 	},
 	editButton: {
 		flex: 1,
@@ -91,19 +76,21 @@ export const styles = StyleSheet.create({
 		padding: 8,
 		borderRadius: 6,
 		alignItems: "center",
+		marginTop: 12,
 	},
 	editButtonText: {
 		color: COLORS.white,
 		fontWeight: 600,
-		fontSize: 14,
+		fontSize: 16,
 	},
-	shareButton: {
-		backgroundColor: COLORS.surface,
-		padding: 8,
-		borderRadius: 6,
-		aspectRatio: 1,
-		alignItems: "center",
+	noPostsContainer: {
+		height: height * 0.55,
 		justifyContent: "center",
+		alignItems: "center",
+	},
+	noPostsText: {
+		fontSize: 20,
+		color: COLORS.primary,
 	},
 	gridItem: {
 		flex: 1 / 3,
@@ -112,6 +99,7 @@ export const styles = StyleSheet.create({
 	},
 	gridImage: {
 		flex: 1,
+		borderRadius: 8,
 	},
 	modalContainer: {
 		flex: 1,
@@ -120,10 +108,10 @@ export const styles = StyleSheet.create({
 	},
 	modalContent: {
 		backgroundColor: COLORS.background,
-		borderTopLeftRadius: 16,
-		borderTopRightRadius: 16,
+		borderTopLeftRadius: 20,
+		borderTopRightRadius: 20,
 		padding: 16,
-		minHeight: 400,
+		minHeight: 375,
 	},
 	modalHeader: {
 		flexDirection: "row",
@@ -136,47 +124,49 @@ export const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: 700,
 	},
-	inputContainer: {
-		marginBottom: 16,
+	editProfileInputContainer: {
+		marginBottom: 12,
 	},
-	inputLabel: {
+	editProfileInputLabel: {
 		color: COLORS.lightGray,
-		marginBottom: 4,
+		marginBottom: 2,
 		fontSize: 14,
 	},
-	input: {
+	editProfileInput: {
 		backgroundColor: COLORS.surface,
 		borderRadius: 6,
-		padding: 12,
+		paddingHorizontal: 12,
+		paddingVertical: 8,
 		color: COLORS.white,
 		fontSize: 16,
 	},
-	bioInput: {
+	editProfileBioInput: {
 		height: 100,
+		borderRadius: 8,
 		textAlignVertical: "top",
 	},
 	saveButton: {
 		backgroundColor: COLORS.primary,
-		padding: 16,
+		padding: 12,
 		borderRadius: 8,
 		alignItems: "center",
-		marginTop: 16,
+		marginTop: 12,
 	},
 	saveButtonText: {
 		color: COLORS.background,
 		fontSize: 16,
 		fontWeight: 600,
 	},
-	modalBackdrop: {
+	postImageModalBackdrop: {
 		flex: 1,
-		backgroundColor: "rgba(0, 0, 0, 0.9)",
+		backgroundColor: "rgba(0, 0, 0, 0.8)",
 		justifyContent: "center",
 	},
-	postDetailContainer: {
+	postImageModalContainer: {
 		backgroundColor: COLORS.background,
 		maxHeight: height * 0.9,
 	},
-	postDetailHeader: {
+	postImageModalHeader: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "flex-end",
@@ -184,9 +174,10 @@ export const styles = StyleSheet.create({
 		borderBottomWidth: 0.5,
 		borderBottomColor: COLORS.surface,
 	},
-	postDetailImage: {
+	postImage: {
 		width: width,
 		height: width,
+		borderRadius: 8,
 	},
 	followButton: {
 		backgroundColor: COLORS.primary,
@@ -210,17 +201,6 @@ export const styles = StyleSheet.create({
 		color: COLORS.white,
 		textAlign: "center",
 	},
-	noPostsContainer: {
-		alignItems: "center",
-		justifyContent: "center",
-		paddingVertical: 48,
-		gap: 12,
-		flex: 1,
-	},
-	noPostsText: {
-		color: COLORS.lightGray,
-		fontSize: 16,
-	},
 	centered: {
 		flex: 1,
 		justifyContent: "center",
@@ -231,10 +211,5 @@ export const styles = StyleSheet.create({
 		flexDirection: "row",
 		flexWrap: "wrap",
 		justifyContent: "space-between",
-	},
-	headerTitle: {
-		fontSize: 18,
-		fontWeight: 600,
-		color: COLORS.white,
 	},
 });
